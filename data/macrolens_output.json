@@ -1,32 +1,32 @@
 {
   "project": {
     "name": "MacroLens",
-    "version": "1.0-adapter",
+    "version": "1.1-explainable",
     "description": "A Python-based quantitative analysis system for structured US dollar macro analysis."
   },
   "status": {
     "state": "LIVE_DATA_WITH_VERIFIED_INPUTS",
-    "generated_at": "2026-09-19T11:53:25.722385+00:00",
+    "generated_at": "2026-09-19T19:33:01.555093+00:00",
     "phase_timestamps": {
-      "phase1": "2026-09-19T12:52:42.938288",
-      "phase2": "2026-09-19T12:52:59.548176",
-      "phase3": "2026-09-19T12:52:59.553835"
+      "phase1": "2026-09-19T20:32:21.797673",
+      "phase2": "2026-09-19T20:32:37.289407",
+      "phase3": "2026-09-19T20:32:37.295141"
     }
   },
   "final_bias": {
-    "score": -0.075,
+    "score": -0.074,
     "direction": "NEUTRAL",
     "label": "Neutral",
     "confidence": "LOW",
     "bullish_scale_display": 0.463,
     "complete": true,
     "inputs": {
-      "phase1_mbs": -0.064,
+      "phase1_mbs": -0.062,
       "phase2_scenario": -0.078,
       "crowding": 0.097
     },
     "contributions": {
-      "phase1_mbs": -0.029,
+      "phase1_mbs": -0.028,
       "phase2_scenario": -0.027,
       "crowding_dampener": -0.019
     },
@@ -35,7 +35,59 @@
       "phase2_scenario": 0.35,
       "crowding_dampener": 0.2
     },
-    "formula": "0.45*MBS + 0.35*ScenarioScore + 0.20*(-Crowding)"
+    "formula": "0.45*MBS + 0.35*ScenarioScore + 0.20*(-Crowding)",
+    "explanation": {
+      "summary": "The USD outlook is neutral because the combined weighted effects remain inside MacroLens' neutral band, producing a final score of -0.074. The largest drag comes from Phase 1 Macro.",
+      "drivers": [
+        {
+          "name": "Phase 1 Macro",
+          "impact": -0.028,
+          "signal": -0.028,
+          "effect": "USD BEARISH",
+          "raw_display": "-0.028 final-score contribution",
+          "info": "Weighted contribution from Macro Fundamentals (LHI, IMS, RDS and PES).",
+          "detail": "Weighted contribution from Macro Fundamentals (LHI, IMS, RDS and PES).",
+          "experimental": false
+        },
+        {
+          "name": "Phase 2 Scenario",
+          "impact": -0.027,
+          "signal": -0.027,
+          "effect": "USD BEARISH",
+          "raw_display": "-0.027 final-score contribution",
+          "info": "Weighted contribution from the Phase 2 scenario/yield aggregate.",
+          "detail": "Weighted contribution from the Phase 2 scenario/yield aggregate.",
+          "experimental": false
+        },
+        {
+          "name": "Crowding overlay",
+          "impact": -0.019,
+          "signal": -0.019,
+          "effect": "USD BEARISH",
+          "raw_display": "-0.019 final-score contribution",
+          "info": "Weighted -Crowding contribution from current USD positioning.",
+          "detail": "Weighted -Crowding contribution from current USD positioning.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "Phase 1 Macro",
+          "display": "-0.028",
+          "info": "Weighted contribution from Macro Fundamentals (LHI, IMS, RDS and PES)."
+        },
+        {
+          "name": "Phase 2 Scenario",
+          "display": "-0.027",
+          "info": "Weighted contribution from the Phase 2 scenario/yield aggregate."
+        },
+        {
+          "name": "Crowding overlay",
+          "display": "-0.019",
+          "info": "Weighted -Crowding contribution from current USD positioning."
+        }
+      ]
+    }
   },
   "cards": [
     {
@@ -43,7 +95,87 @@
       "title": "LHI",
       "subtitle": "Labour Heat Index",
       "score": -0.07,
-      "why": "Labor market cooling",
+      "why": "Labour conditions are broadly neutral, with no decisive directional labour signal.",
+      "summary": "Labour conditions are broadly neutral, with no decisive directional labour signal. Initial claims is the strongest USD-supportive input, while JOLTS quits is the largest drag.",
+      "drivers": [
+        {
+          "name": "Initial claims",
+          "impact": 0.274,
+          "signal": 1.37,
+          "effect": "USD BULLISH",
+          "raw_display": "196k",
+          "info": "Weekly initial unemployment-insurance claims. Lower claims generally indicate a firmer labour market, so MacroLens inverts this series.",
+          "detail": "Normalized labour signal +1.37; equal-weight contribution across 5 available labour inputs.",
+          "experimental": false
+        },
+        {
+          "name": "JOLTS quits",
+          "impact": -0.231,
+          "signal": -1.156,
+          "effect": "USD BEARISH",
+          "raw_display": "1.9%",
+          "info": "JOLTS quits rate. A higher quits rate can indicate worker confidence and a tighter labour market.",
+          "detail": "Normalized labour signal -1.16; equal-weight contribution across 5 available labour inputs.",
+          "experimental": false
+        },
+        {
+          "name": "JOLTS openings",
+          "impact": -0.173,
+          "signal": -0.867,
+          "effect": "USD BEARISH",
+          "raw_display": "7.271m",
+          "info": "JOLTS job openings, reported in thousands. Higher openings generally indicate stronger labour demand.",
+          "detail": "Normalized labour signal -0.87; equal-weight contribution across 5 available labour inputs.",
+          "experimental": false
+        },
+        {
+          "name": "NFP surprise",
+          "impact": 0.146,
+          "signal": 0.73,
+          "effect": "USD BULLISH",
+          "raw_display": "+106k vs consensus",
+          "info": "Nonfarm payroll surprise: actual payroll growth minus the market consensus forecast, measured in thousands of jobs.",
+          "detail": "Normalized labour signal +0.73; equal-weight contribution across 5 available labour inputs.",
+          "experimental": false
+        },
+        {
+          "name": "Unemployment",
+          "impact": -0.085,
+          "signal": -0.427,
+          "effect": "USD BEARISH",
+          "raw_display": "4.1%",
+          "info": "US unemployment rate. MacroLens inverts this input: lower unemployment is treated as a firmer labour signal and higher unemployment as a weaker one.",
+          "detail": "Normalized labour signal -0.43; equal-weight contribution across 5 available labour inputs.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "Unemployment",
+          "display": "4.1%",
+          "info": "US unemployment rate. MacroLens inverts this input: lower unemployment is treated as a firmer labour signal and higher unemployment as a weaker one."
+        },
+        {
+          "name": "NFP surprise",
+          "display": "+106k vs consensus",
+          "info": "Nonfarm payroll surprise: actual payroll growth minus the market consensus forecast, measured in thousands of jobs."
+        },
+        {
+          "name": "Initial claims",
+          "display": "196k",
+          "info": "Weekly initial unemployment-insurance claims. Lower claims generally indicate a firmer labour market, so MacroLens inverts this series."
+        },
+        {
+          "name": "JOLTS openings",
+          "display": "7.271m",
+          "info": "JOLTS job openings, reported in thousands. Higher openings generally indicate stronger labour demand."
+        },
+        {
+          "name": "JOLTS quits",
+          "display": "1.9%",
+          "info": "JOLTS quits rate. A higher quits rate can indicate worker confidence and a tighter labour market."
+        }
+      ],
       "contributors": [
         {
           "name": "unemployment",
@@ -66,14 +198,80 @@
           "value": 1.9
         }
       ],
-      "data_quality": "LIVE"
+      "data_quality": "LIVE",
+      "notes": []
     },
     {
       "key": "ims",
       "title": "IMS",
       "subtitle": "Inflation Momentum Score",
       "score": -0.27,
-      "why": "Inflation cooling",
+      "why": "Inflation momentum is moderately cooling, reducing USD support through the macro layer.",
+      "summary": "Inflation momentum is moderately cooling, reducing USD support through the macro layer. Core PPI is the strongest USD-supportive input, while Core CPI momentum is the largest drag.",
+      "drivers": [
+        {
+          "name": "Core CPI momentum",
+          "impact": -0.44,
+          "signal": -1.257,
+          "effect": "USD BEARISH",
+          "raw_display": "1.97% SAAR",
+          "info": "Three-month annualised momentum in core CPI, which excludes food and energy. MacroLens compares it with its own recent history rather than using the raw level alone.",
+          "detail": "Weight 35% × normalized signal -1.26.",
+          "experimental": false
+        },
+        {
+          "name": "Core PPI",
+          "impact": 0.362,
+          "signal": 1.811,
+          "effect": "USD BULLISH",
+          "raw_display": "154.84 index",
+          "info": "Core producer-price index level, normalized against its five-year history to measure unusual producer-price pressure.",
+          "detail": "Weight 20% × normalized signal +1.81.",
+          "experimental": false
+        },
+        {
+          "name": "Core PCE momentum",
+          "impact": -0.126,
+          "signal": -0.502,
+          "effect": "USD BEARISH",
+          "raw_display": "3.05% SAAR",
+          "info": "Three-month annualised momentum in core PCE, the Federal Reserve's preferred underlying inflation gauge.",
+          "detail": "Weight 25% × normalized signal -0.50.",
+          "experimental": false
+        },
+        {
+          "name": "Inflation diffusion",
+          "impact": -0.068,
+          "signal": -0.34,
+          "effect": "USD BEARISH",
+          "raw_display": "33% of tracked components rising",
+          "info": "Share of the tracked inflation components whose momentum is rising. Broad acceleration increases the inflation score; broad cooling reduces it.",
+          "detail": "20% weight × diffusion signal -0.34.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "Core CPI momentum",
+          "display": "1.97% SAAR",
+          "info": "Three-month annualised momentum in core CPI, which excludes food and energy. MacroLens compares it with its own recent history rather than using the raw level alone."
+        },
+        {
+          "name": "Core PCE momentum",
+          "display": "3.05% SAAR",
+          "info": "Three-month annualised momentum in core PCE, the Federal Reserve's preferred underlying inflation gauge."
+        },
+        {
+          "name": "Core PPI",
+          "display": "154.84 index",
+          "info": "Core producer-price index level, normalized against its five-year history to measure unusual producer-price pressure."
+        },
+        {
+          "name": "Inflation diffusion",
+          "display": "33% of tracked components rising",
+          "info": "Share of the tracked inflation components whose momentum is rising. Broad acceleration increases the inflation score; broad cooling reduces it."
+        }
+      ],
       "contributors": [
         {
           "name": "core_cpi_saar",
@@ -88,14 +286,65 @@
           "value": 154.842
         }
       ],
-      "data_quality": "LIVE"
+      "data_quality": "LIVE",
+      "notes": []
     },
     {
       "key": "rds",
       "title": "RDS",
       "subtitle": "Rate Differential Signal",
       "score": -0.498,
-      "why": "Rate differentials against USD",
+      "why": "Relative-rate momentum materially leans against the USD.",
+      "summary": "Relative-rate momentum materially leans against the USD. MacroLens scores the recent change in US-versus-German rate advantages, not the absolute spread alone. The largest drag comes from US–Germany 10Y spread movement.",
+      "drivers": [
+        {
+          "name": "US–Germany 10Y spread movement",
+          "impact": -0.416,
+          "signal": -0.832,
+          "effect": "USD BEARISH",
+          "raw_display": "-11.96 bp recent change",
+          "info": "Change in the US-Germany 10-year yield spread. A widening US advantage is USD-supportive; a narrowing advantage is USD-negative.",
+          "detail": "Weight 50% × tanh(change / 10bp) = -0.416.",
+          "experimental": false
+        },
+        {
+          "name": "US curve-slope movement",
+          "impact": -0.083,
+          "signal": -0.834,
+          "effect": "USD BEARISH",
+          "raw_display": "-12.00 bp recent change",
+          "info": "Change in the US 10-year minus 2-year yield-curve slope. This is a smaller contextual component of the Rate Differential Signal.",
+          "detail": "Weight 10% × tanh(change / 10bp) = -0.083.",
+          "experimental": false
+        },
+        {
+          "name": "US–Germany 2Y spread movement",
+          "impact": 0.002,
+          "signal": 0.004,
+          "effect": "NEUTRAL",
+          "raw_display": "+0.04 bp recent change",
+          "info": "Change in the US-Germany 2-year yield spread. The model cares about whether the US short-rate advantage is widening or narrowing, not simply whether the absolute spread is positive.",
+          "detail": "Weight 40% × tanh(change / 10bp) = +0.002.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "US–Germany 2Y spread movement",
+          "display": "+0.04 bp recent change",
+          "info": "Change in the US-Germany 2-year yield spread. The model cares about whether the US short-rate advantage is widening or narrowing, not simply whether the absolute spread is positive."
+        },
+        {
+          "name": "US–Germany 10Y spread movement",
+          "display": "-11.96 bp recent change",
+          "info": "Change in the US-Germany 10-year yield spread. A widening US advantage is USD-supportive; a narrowing advantage is USD-negative."
+        },
+        {
+          "name": "US curve-slope movement",
+          "display": "-12.00 bp recent change",
+          "info": "Change in the US 10-year minus 2-year yield-curve slope. This is a smaller contextual component of the Rate Differential Signal."
+        }
+      ],
       "contributors": [
         {
           "name": "us_2y",
@@ -120,51 +369,195 @@
         {
           "name": "us_de_2y_delta",
           "value": 0.0004
+        },
+        {
+          "name": "us_de_10y_spread",
+          "value": 1.76
+        },
+        {
+          "name": "us_de_10y_delta",
+          "value": -0.1196
         }
       ],
-      "data_quality": "LIVE"
+      "data_quality": "LIVE",
+      "notes": []
     },
     {
       "key": "pes",
       "title": "PES",
       "subtitle": "Policy Expectation Score",
-      "score": 1.654,
-      "why": "Hawkish - -0.7 cuts priced, supporting USD",
+      "score": 1.671,
+      "why": "Current Federal Reserve expectations provide strong support to the USD outlook.",
+      "summary": "Current Federal Reserve expectations provide strong support to the USD outlook. USD support is led by Fed funds futures.",
+      "drivers": [
+        {
+          "name": "Fed funds futures",
+          "impact": 1.471,
+          "signal": 1.471,
+          "effect": "USD BULLISH",
+          "raw_display": "≈0.7 hike priced",
+          "info": "Fed funds futures imply the market's expected Federal Reserve policy path around upcoming FOMC meetings. MacroLens compares that path with its recent baseline; fewer expected cuts or implied hikes are USD-supportive. This component is normalized as a z-score, so unusually strong policy pricing can exceed ±1 before it is combined with the communication stance.",
+          "detail": "Policy-pricing signal derived from the futures-implied path relative to its rolling baseline.",
+          "experimental": false
+        },
+        {
+          "name": "Fed communication stance",
+          "impact": 0.2,
+          "signal": 0.2,
+          "effect": "USD BULLISH",
+          "raw_display": "Hawkish",
+          "info": "Current Federal Reserve communication stance. In the present methodology, a hawkish stance adds +0.20, a dovish stance subtracts 0.20 and a neutral stance adds zero.",
+          "detail": "Communication-stance adjustment used by the current PES methodology.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "Fed funds futures",
+          "display": "≈0.7 hike priced",
+          "info": "Fed funds futures imply the market's expected Federal Reserve policy path around upcoming FOMC meetings. MacroLens compares that path with its recent baseline; fewer expected cuts or implied hikes are USD-supportive. This component is normalized as a z-score, so unusually strong policy pricing can exceed ±1 before it is combined with the communication stance."
+        },
+        {
+          "name": "Fed communication stance",
+          "display": "Hawkish",
+          "info": "Current Federal Reserve communication stance. In the present methodology, a hawkish stance adds +0.20, a dovish stance subtracts 0.20 and a neutral stance adds zero."
+        }
+      ],
       "contributors": [],
-      "data_quality": "PARTIAL"
+      "data_quality": "LIVE",
+      "notes": []
     },
     {
       "key": "phase2",
-      "title": "Phase 2",
+      "title": "Second Underlying Dynamic",
       "subtitle": "Scenario & Yield Analysis",
       "score": -0.078,
-      "why": "Neutral scenario",
-      "contributors": [
+      "why": "Scenario and yield conditions are close to neutral for the USD.",
+      "summary": "Scenario and yield conditions are close to neutral for the USD. Real Rate Tilt is the strongest USD-supportive input, while Carry is the largest drag.",
+      "drivers": [
         {
-          "name": "yss",
-          "value": -0.1
+          "name": "Carry",
+          "impact": -0.083,
+          "signal": -0.333,
+          "effect": "USD BEARISH",
+          "raw_display": "-0.333 component score",
+          "info": "Carry score: measures how attractive USD interest-rate carry is relative to peer currencies within the Phase 2 model.",
+          "detail": "Renormalized Phase 2 contribution: 25% weight × -0.333 / 1.00.",
+          "experimental": false
         },
         {
-          "name": "carry",
-          "value": -0.333
+          "name": "Yield Spread Score",
+          "impact": -0.035,
+          "signal": -0.1,
+          "effect": "USD BEARISH",
+          "raw_display": "-0.100 component score",
+          "info": "Yield Spread Score: a composite of relative US-versus-peer yield and policy-gap changes.",
+          "detail": "Renormalized Phase 2 contribution: 35% weight × -0.100 / 1.00.",
+          "experimental": false
         },
         {
-          "name": "real_rate_tilt",
-          "value": 0.12
+          "name": "Real Rate Tilt",
+          "impact": 0.024,
+          "signal": 0.12,
+          "effect": "USD BULLISH",
+          "raw_display": "+0.120 component score",
+          "info": "Real-rate tilt: compares inflation-adjusted US yields with peer real yields and their recent movement.",
+          "detail": "Renormalized Phase 2 contribution: 20% weight × +0.120 / 1.00.",
+          "experimental": false
         },
         {
-          "name": "mrs",
-          "value": 0.083
+          "name": "Macro Regime Score",
+          "impact": 0.017,
+          "signal": 0.083,
+          "effect": "USD BULLISH",
+          "raw_display": "+0.083 component score",
+          "info": "Macro Regime Score: a broader regime component used to confirm or offset the yield/carry picture.",
+          "detail": "Renormalized Phase 2 contribution: 20% weight × +0.083 / 1.00.",
+          "experimental": false
         }
       ],
-      "data_quality": "FULL"
+      "technical_data": [
+        {
+          "name": "Yield Spread Score",
+          "display": "-0.100",
+          "info": "Yield Spread Score: a composite of relative US-versus-peer yield and policy-gap changes."
+        },
+        {
+          "name": "Carry",
+          "display": "-0.333",
+          "info": "Carry score: measures how attractive USD interest-rate carry is relative to peer currencies within the Phase 2 model."
+        },
+        {
+          "name": "Real Rate Tilt",
+          "display": "+0.120",
+          "info": "Real-rate tilt: compares inflation-adjusted US yields with peer real yields and their recent movement."
+        },
+        {
+          "name": "Macro Regime Score",
+          "display": "+0.083",
+          "info": "Macro Regime Score: a broader regime component used to confirm or offset the yield/carry picture."
+        }
+      ],
+      "contributors": [],
+      "data_quality": "FULL",
+      "notes": []
     },
     {
       "key": "positioning",
       "title": "Positioning",
       "subtitle": "USD Market Positioning",
       "score": 0.097,
-      "why": "USD positioning neutral",
+      "why": "USD positioning is broadly neutral.",
+      "summary": "USD positioning is broadly neutral. CFTC positioning is the strongest USD-supportive input, while Retail positioning is the largest drag.",
+      "drivers": [
+        {
+          "name": "CFTC positioning",
+          "impact": 0.17,
+          "signal": 0.34,
+          "effect": "USD BULLISH",
+          "raw_display": "+0.680",
+          "info": "CFTC futures positioning normalized into a USD-directional signal. Large positive values indicate relatively long USD positioning.",
+          "detail": "Available-weight contribution +0.170 after normalization.",
+          "experimental": false
+        },
+        {
+          "name": "Retail positioning",
+          "impact": -0.045,
+          "signal": -0.18,
+          "effect": "USD BEARISH",
+          "raw_display": "-0.180",
+          "info": "Myfxbook retail positioning transformed into a USD-directional contrarian skew across the available FX pairs.",
+          "detail": "Available-weight contribution -0.045 after normalization.",
+          "experimental": false
+        },
+        {
+          "name": "HF / CTA positioning",
+          "impact": -0.028,
+          "signal": -0.111,
+          "effect": "USD BEARISH",
+          "raw_display": "-0.111",
+          "info": "Hedge-fund / CTA positioning derived from CFTC Traders in Financial Futures data and converted to a USD-directional tilt.",
+          "detail": "Available-weight contribution -0.028 after normalization.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "CFTC positioning",
+          "display": "+0.680",
+          "info": "CFTC futures positioning normalized into a USD-directional signal. Large positive values indicate relatively long USD positioning."
+        },
+        {
+          "name": "Retail positioning",
+          "display": "-0.180",
+          "info": "Myfxbook retail positioning transformed into a USD-directional contrarian skew across the available FX pairs."
+        },
+        {
+          "name": "HF / CTA positioning",
+          "display": "-0.111",
+          "info": "Hedge-fund / CTA positioning derived from CFTC Traders in Financial Futures data and converted to a USD-directional tilt."
+        }
+      ],
       "contributors": [
         {
           "name": "cot_z",
@@ -183,17 +576,80 @@
           "value": -0.111
         }
       ],
-      "data_quality": "MIXED",
-      "notes": [],
-      "drivers": [],
-      "technical_data": []
+      "data_quality": "CORE_LIVE",
+      "notes": []
     },
     {
       "key": "sentiment",
       "title": "Sentiment",
       "subtitle": "Equity Risk Sentiment",
       "score": -0.206,
-      "why": "Mild risk aversion",
+      "why": "Equity risk sentiment is currently classified as Risk Off.",
+      "summary": "Equity risk sentiment is currently classified as Risk Off. VIX is the strongest risk-on input, while Put / Call Ratio provides the largest risk-off offset. Risk sentiment is displayed separately as supporting market context, while the crowding overlay is driven by USD positioning.",
+      "drivers": [
+        {
+          "name": "Put / Call Ratio",
+          "impact": -0.3,
+          "signal": -1.0,
+          "effect": "RISK-OFF",
+          "raw_display": "+2.270",
+          "info": "SPY put/call ratio normalized against its baseline. Higher put activity tends to indicate more defensive risk sentiment.",
+          "detail": "Context-layer contribution -0.300 after available-weight normalization.",
+          "experimental": false
+        },
+        {
+          "name": "VIX",
+          "impact": 0.124,
+          "signal": 0.415,
+          "effect": "RISK-ON",
+          "raw_display": "-0.830",
+          "info": "VIX volatility signal. In the sentiment context layer, higher volatility contributes toward risk-off conditions.",
+          "detail": "Context-layer contribution +0.124 after available-weight normalization.",
+          "experimental": false
+        },
+        {
+          "name": "Fear & Greed",
+          "impact": -0.063,
+          "signal": -0.418,
+          "effect": "RISK-OFF",
+          "raw_display": "-0.418",
+          "info": "CNN Fear & Greed score normalized onto a -1 to +1 scale. It is used only as equity-risk context, not as USD positioning.",
+          "detail": "Context-layer contribution -0.063 after available-weight normalization.",
+          "experimental": false
+        },
+        {
+          "name": "AAII sentiment",
+          "impact": 0.033,
+          "signal": 0.13,
+          "effect": "RISK-ON",
+          "raw_display": "+0.260",
+          "info": "AAII bull-bear sentiment spread normalized against its historical baseline.",
+          "detail": "Context-layer contribution +0.033 after available-weight normalization.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "VIX",
+          "display": "-0.830",
+          "info": "VIX volatility signal. In the sentiment context layer, higher volatility contributes toward risk-off conditions."
+        },
+        {
+          "name": "Put / Call Ratio",
+          "display": "+2.270",
+          "info": "SPY put/call ratio normalized against its baseline. Higher put activity tends to indicate more defensive risk sentiment."
+        },
+        {
+          "name": "AAII sentiment",
+          "display": "+0.260",
+          "info": "AAII bull-bear sentiment spread normalized against its historical baseline."
+        },
+        {
+          "name": "Fear & Greed",
+          "display": "-0.418",
+          "info": "CNN Fear & Greed score normalized onto a -1 to +1 scale. It is used only as equity-risk context, not as USD positioning."
+        }
+      ],
       "contributors": [
         {
           "name": "vix_z",
@@ -213,6 +669,7 @@
         }
       ],
       "data_quality": "MIXED",
+      "notes": [],
       "context_only": true,
       "risk_regime": "RISK_OFF"
     },
@@ -221,9 +678,30 @@
       "title": "Crowding",
       "subtitle": "USD Crowding Overlay",
       "score": 0.097,
-      "why": "USD crowding: NEUTRAL",
+      "why": "USD crowding is classified as Neutral at +0.097.",
+      "summary": "USD crowding is classified as Neutral at +0.097. In the V1 final-bias formula this positioning score is applied as a dampener through the -Crowding term.",
+      "drivers": [
+        {
+          "name": "USD positioning / crowding",
+          "impact": -0.019,
+          "signal": 0.097,
+          "effect": "USD BEARISH",
+          "raw_display": "+0.097",
+          "info": "The current USD positioning score used as the crowding overlay. In the V1 final-bias formula, positive crowding subtracts from the final score and negative crowding adds to it.",
+          "detail": "This row shows its direct contribution to the final score at the 20% final-bias weight.",
+          "experimental": false
+        }
+      ],
+      "technical_data": [
+        {
+          "name": "Crowding score",
+          "display": "+0.097",
+          "info": "The current USD positioning score used as the crowding overlay. In the V1 final-bias formula, positive crowding subtracts from the final score and negative crowding adds to it."
+        }
+      ],
       "contributors": [],
       "data_quality": "DERIVED",
+      "notes": [],
       "regime": "NEUTRAL"
     }
   ],
@@ -266,7 +744,7 @@
     },
     {
       "source": "AAII",
-      "status": "VERIFIED_INPUT",
+      "status": "OWNER_INPUT",
       "note": "Latest AAII investor sentiment survey readings"
     }
   ],
@@ -275,7 +753,7 @@
       "LHI": "LIVE",
       "IMS": "LIVE",
       "RDS": "LIVE",
-      "PES": "PARTIAL"
+      "PES": "LIVE"
     },
     "phase2": {
       "yss": "FULL",
@@ -287,7 +765,7 @@
     },
     "phase3": {
       "retail": "LIVE_PRIVATE_REFRESH",
-      "aaii": "VERIFIED_INPUT",
+      "aaii": "OWNER_INPUT",
       "sentiment_context_only": true
     }
   },
@@ -299,9 +777,10 @@
     "final_bias_source": "PDF page 16",
     "scenario_score_adapter": "phase2.phase2_aggregate.score",
     "scenario_score_note": "V1 integration mapping; Bayesian probabilities remain exposed separately.",
-    "sentiment_note": "Risk sentiment is displayed separately as supporting market context, while the crowding overlay is driven by USD positioning."
+    "sentiment_note": "Risk sentiment is displayed separately as supporting market context, while the crowding overlay is driven by USD positioning.",
+    "explainability": "Deterministic rule-based summaries generated from real normalized signals and weighted contributions; no LLM/API text generation."
   },
   "verified_inputs": {
-    "updated_at": "2026-09-18"
+    "updated_at": "2026-09-19"
   }
 }
