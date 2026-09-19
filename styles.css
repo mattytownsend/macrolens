@@ -1794,3 +1794,91 @@ body.modal-open{overflow:hidden}
     height:auto;
   }
 }
+
+/* =========================================================
+   V1.0.1 MOBILE FINAL USD BIAS FIX
+   Keeps desktop layout untouched and stacks the overview cleanly on phones.
+   ========================================================= */
+@media (max-width:760px){
+  .final-card{
+    padding:18px;
+  }
+
+  .redesigned-final-main{
+    --final-top-height:auto;
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .redesigned-bias{
+    min-height:auto;
+    height:auto;
+    padding:20px;
+    gap:16px;
+  }
+
+  .redesigned-arrow{
+    width:56px;
+    height:56px;
+    flex:0 0 56px;
+    font-size:24px;
+  }
+
+  .bias-copy strong{
+    font-size:34px;
+  }
+
+  .bias-copy p{
+    font-size:13px;
+    line-height:1.55;
+  }
+
+  .final-metrics{
+    min-height:0;
+    height:auto;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:none;
+    gap:10px;
+  }
+
+  .redesigned-score,
+  .redesigned-confidence{
+    min-height:108px;
+    height:auto;
+    padding:14px;
+  }
+
+  .metric-row strong{
+    font-size:25px;
+  }
+
+  .redesigned-confidence .metric-row strong{
+    font-size:16px;
+    line-height:1.15;
+  }
+
+  .redesigned-dynamics{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:390px){
+  .redesigned-bias{
+    align-items:flex-start;
+  }
+
+  .redesigned-arrow{
+    width:48px;
+    height:48px;
+    flex:0 0 48px;
+    font-size:21px;
+  }
+
+  .bias-copy strong{
+    font-size:30px;
+  }
+
+  .final-metrics{
+    grid-template-columns:1fr;
+  }
+}
