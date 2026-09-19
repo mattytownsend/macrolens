@@ -121,8 +121,74 @@ function legacyDrivers(card){
   });
 }
 
+function positioningFallbackDrivers(card){
+  const values = Object.fromEntries((card.contributors || []).map(c => [c.name, c.value]));
+  const specs = [
+    {key:"cot_z", name:"CFTC positioning", weight:0.4, signal:v=>Math.max(-1,Math.min(1,Number(v)/2)), info:INFO.cot_z},
+    {key:"retail_skew", name:"Retail positioning", weight:0.2, signal:v=>Math.max(-1,Math.min(1,Number(v))), info:INFO.retail_skew},
+    {key:"hf_tilt", name:"HF / CTA positioning", weight:0.2, signal:v=>Math.max(-1,Math.min(1,Number(v))), info:INFO.hf_tilt}
+  ].filter(s => values[s.key] !== null && values[s.key] !== undefined && !Number.isNaN(Number(values[s.key])));
+  const totalWeight = specs.reduce((sum,s)=>sum+s.weight,0) || 1;
+  return specs.map(s => {
+    const raw = Number(values[s.key]);
+    const sig = s.signal(raw);
+    const impact = (s.weight / totalWeight) * sig;
+    return {
+      name:s.name,
+      impact,
+      signal:sig,
+      effect:impact > .05 ? "USD BULLISH" : impact < -.05 ? "USD BEARISH" : "NEUTRAL",
+      raw_display:fmt(raw),
+      info:s.info,
+      detail:`Renormalized positioning weight ${(s.weight/totalWeight*100).toFixed(0)}% × normalized signal ${fmt(sig,2)}.`
+    };
+  }).sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact));
+}
+
+function pesFallbackDrivers(card){
+  const score = Number(card.score);
+  if (Number.isNaN(score)) return [];
+  const text = String(card.why || card.summary || "");
+  const tone = /hawkish/i.test(text) ? "HAWKISH" : /dovish/i.test(text) ? "DOVISH" : /neutral/i.test(text) ? "NEUTRAL" : null;
+  const fedImpact = tone === "HAWKISH" ? 0.20 : tone === "DOVISH" ? -0.20 : tone === "NEUTRAL" ? 0 : null;
+  const futuresImpact = fedImpact === null ? score : score - fedImpact;
+  const cutsMatch = text.match(/([+-]?\d+(?:\.\d+)?)\s+cuts priced/i);
+  let futuresDisplay = "Fed funds futures contribution";
+  if (cutsMatch){
+    const cuts = Number(cutsMatch[1]);
+    if (cuts < -0.05) futuresDisplay = `≈${Math.abs(cuts).toFixed(1)} ${Math.abs(cuts)<1.05?"hike":"hikes"} priced`;
+    else if (cuts > 0.05) futuresDisplay = `≈${Math.abs(cuts).toFixed(1)} ${Math.abs(cuts)<1.05?"cut":"cuts"} priced`;
+    else futuresDisplay = "Policy path near the current rate";
+  }
+  const rows = [{
+    name:"Fed funds futures",
+    impact:futuresImpact, signal:futuresImpact,
+    effect:futuresImpact > .05 ? "USD BULLISH" : futuresImpact < -.05 ? "USD BEARISH" : "NEUTRAL",
+    raw_display:futuresDisplay,
+    info:"The futures-implied policy path is standardized relative to its recent history. Fewer cuts or implied hikes are USD-supportive in the current PES methodology."
+  }];
+  if (fedImpact !== null){
+    rows.push({
+      name:"Fed communication stance",
+      impact:fedImpact, signal:fedImpact,
+      effect:fedImpact > .05 ? "USD BULLISH" : fedImpact < -.05 ? "USD BEARISH" : "NEUTRAL",
+      raw_display:titleCase(tone),
+      info:"Current Federal Reserve communication stance. Hawkish adds +0.20, dovish subtracts 0.20 and neutral adds zero in the current PES methodology."
+    });
+  }
+  return rows.sort((a,b)=>Math.abs(b.impact)-Math.abs(a.impact));
+}
+
 function explanationForCard(card){
-  const drivers = (card.drivers || card.explanation?.drivers || legacyDrivers(card))
+  const suppliedDrivers = Array.isArray(card.drivers) && card.drivers.length
+    ? card.drivers
+    : (Array.isArray(card.explanation?.drivers) && card.explanation.drivers.length ? card.explanation.drivers : null);
+  const fallbackDrivers = card.key === "positioning"
+    ? positioningFallbackDrivers(card)
+    : card.key === "pes"
+      ? pesFallbackDrivers(card)
+      : legacyDrivers(card);
+  const drivers = (suppliedDrivers || fallbackDrivers)
     .filter(d => !d.experimental && !String(d.name || "").toLowerCase().includes("etf"));
 
   const policyDisplay = (d) => {
