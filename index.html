@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="MacroLens is a quantitative US dollar macro analysis system created by Matthew Townsend, built with Python, statistical modelling and live economic data." />
+  <meta name="author" content="Matthew Townsend" />
+  <meta name="creator" content="Matthew Townsend" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MacroLens",
+    "applicationCategory": "FinanceApplication",
+    "description": "A quantitative macro analysis system for structured, explainable US dollar analysis.",
+    "creator": {
+      "@type": "Person",
+      "name": "Matthew Townsend",
+      "url": "https://matthewtownsend.dev/"
+    }
+  }
+  </script>
+  <title>MacroLens — USD Macro Intelligence</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="MacroLens home">
+        <span class="brand-icon"><span>M</span></span>
+        <span class="brand-copy"><strong>MacroLens</strong><small>USD Macro Intelligence</small></span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#overview">Overview</a>
+        <a href="#signals">Signals</a>
+        <a href="#sources">Sources</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#creator">Creator</a>
+      </nav>
+      <div class="live-pill" id="header-status"><span class="status-dot"></span><span id="header-status-text">LOADING</span></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow">PYTHON · PANDAS · NUMPY · REST APIs · JSON · JAVASCRIPT · DATA ENGINEERING · STATISTICAL MODELLING</div>
+        <h1>MacroLens</h1>
+        <p class="hero-lede">A quantitative analysis system that transforms macroeconomic, rates, positioning and sentiment data into a structured, explainable outlook for the US dollar.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#overview">View live dashboard <span>→</span></a>
+          <a class="button secondary" href="#methodology">Read methodology</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Live US macro engine snapshot">
+        <div class="engine-head">
+          <div><span>LIVE MODEL SNAPSHOT</span><strong>US Macro Engine</strong></div>
+          <span class="engine-live"><i></i> LIVE DATA</span>
+        </div>
+
+        <div class="macro-engine">
+          <div class="macro-node labour"><span>LABOUR</span><strong id="hero-lhi">—</strong><small id="hero-lhi-label">—</small></div>
+          <div class="macro-node inflation"><span>INFLATION</span><strong id="hero-ims">—</strong><small id="hero-ims-label">—</small></div>
+
+          <div class="engine-core">
+            <div class="core-ring">
+              <span>USD</span>
+              <strong id="hero-final-score">—</strong>
+              <small id="hero-final-label">—</small>
+            </div>
+          </div>
+
+          <div class="macro-node rates"><span>RATES</span><strong id="hero-rds">—</strong><small id="hero-rds-label">—</small></div>
+          <div class="macro-node policy"><span>POLICY</span><strong id="hero-pes">—</strong><small id="hero-pes-label">—</small></div>
+
+          <svg class="engine-lines" viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M150 68 C235 68,220 130,300 150"/>
+            <path d="M450 68 C365 68,380 130,300 150"/>
+            <path d="M150 232 C235 232,220 170,300 150"/>
+            <path d="M450 232 C365 232,380 170,300 150"/>
+          </svg>
+        </div>
+
+        <div class="engine-foot">Macroeconomic inputs → normalized signals → weighted USD outlook</div>
+      </div>
+    </section>
+
+    <section class="section shell" id="overview">
+      <div class="section-heading">
+        <div><span class="kicker">SYSTEM OUTPUT</span><h2>USD Macro Overview</h2></div>
+        <span class="freshness" id="freshness-note">Waiting for data…</span>
+      </div>
+
+      <div class="overview-grid">
+        <article class="panel final-card">
+          <div class="panel-head final-head">
+            <div><span class="mini-label">FINAL USD BIAS</span></div>
+          </div>
+
+          <div class="final-main redesigned-final-main">
+            <div class="bias-badge redesigned-bias" id="bias-badge">
+              <span class="bias-arrow redesigned-arrow" id="bias-arrow">↔</span>
+              <div class="bias-copy">
+                <span class="regime-kicker">CURRENT REGIME</span>
+                <strong id="final-direction">—</strong>
+                <p id="final-regime-summary">The model is evaluating the current mix of USD macro forces.</p>
+              </div>
+            </div>
+
+            <div class="final-metrics">
+              <div class="score-block redesigned-score">
+                <div class="metric-heading"><span>Score</span></div>
+                <div class="metric-row">
+                  <div>
+                    <strong id="final-score">—</strong>
+                    <small>Normalized final bias</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="conviction-card redesigned-confidence">
+                <div class="metric-heading"><span>Confidence</span></div>
+                <div class="metric-row">
+                  <div>
+                    <strong id="confidence-text">— confidence</strong>
+                    <small>Directional conviction</small>
+                  </div>
+                  <span class="confidence-gauge" aria-hidden="true"><i></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bias-track redesigned-track" aria-label="Final bias scale">
+            <span>Bearish</span><div class="track"><i id="bias-marker"></i></div><span>Bullish</span>
+          </div>
+
+          <div class="phase-mini-grid redesigned-dynamics">
+            <div class="dynamic-tile dynamic-one">
+              <div class="dynamic-head"><span>First Underlying Dynamic</span><span class="dynamic-number">01</span></div>
+              <strong id="p1-score">—</strong>
+              <small>Macro fundamentals</small>
+            </div>
+            <div class="dynamic-tile dynamic-two">
+              <div class="dynamic-head"><span>Second Underlying Dynamic</span><span class="dynamic-number">02</span></div>
+              <strong id="p2-score">—</strong>
+              <small>Scenario &amp; yield analysis</small>
+            </div>
+            <div class="dynamic-tile dynamic-three">
+              <div class="dynamic-head"><span>Third Underlying Dynamic</span><span class="dynamic-number">03</span></div>
+              <strong id="crowding-score">—</strong>
+              <small>Positioning &amp; crowding</small>
+            </div>
+          </div>
+
+          <button class="why-primary redesigned-why" type="button" data-modal-key="final">
+            <span class="why-icon large-why-icon">?</span>
+            <span class="why-copy"><strong>Why this result?</strong><small>See the key drivers behind the model's USD bias</small></span>
+            <span class="why-arrow">›</span>
+          </button>
+        </article>
+
+        <article class="panel outlook-card">
+          <div class="panel-head">
+            <div><span class="mini-label">CURRENT OUTLOOK</span><h3 id="outlook-title">—</h3></div>
+            
+          </div>
+          <p class="outlook-summary" id="outlook-summary">Loading the model explanation…</p>
+
+          <div class="primary-drivers">
+            <div class="subhead single-line"><span>PRIMARY SIGNALS — LARGEST CURRENT COMPONENT SCORES</span></div>
+            <div id="primary-driver-list"></div>
+          </div>
+
+          <div class="scenario-compact">
+            <div class="subhead"><span>Bayesian scenarios</span><small>Second underlying dynamic context</small></div>
+            <div id="scenario-list"></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="signals">
+      <div class="section-heading">
+        <div><span class="kicker">EXPLAINABLE ANALYTICS</span><h2>Signal Breakdown</h2></div>
+        <p>Open any signal to see what is driving the score, how individual inputs contribute, and what the underlying data represents.</p>
+      </div>
+
+      <div class="signal-grid" id="signal-grid"></div>
+
+      <div class="outlook-reasons panel">
+        <div class="reasons-head">
+          <div><span class="kicker">MODEL NARRATIVE</span><h3>What is driving the outlook?</h3></div>
+          <button class="text-button" type="button" data-modal-key="final">Open full final explanation →</button>
+        </div>
+        <ol id="reason-list"></ol>
+      </div>
+    </section>
+
+    <section class="section shell" id="sources">
+      <div class="section-heading">
+        <div><span class="kicker">DATA PROVENANCE</span><h2>Source Health</h2></div>
+        <p>MacroLens combines automated data feeds with manually verified macro inputs and reports the status of every source used in the current model.</p>
+      </div>
+      <div class="source-grid" id="source-grid"></div>
+    </section>
+
+    <section class="section shell" id="architecture">
+      <div class="section-heading">
+        <div><span class="kicker">SYSTEM DESIGN</span><h2>Architecture</h2></div>
+        <p>The private analysis engine and public presentation layer are deliberately separated.</p>
+      </div>
+
+      <div class="architecture panel">
+        <div class="arch-node"><span>01 · INPUTS</span><strong>Data sources</strong><p>Automated economic and market feeds from FRED, CFTC, Yahoo Finance and Myfxbook, alongside manually verified macro inputs.</p></div>
+        <i>→</i>
+        <div class="arch-node"><span>02 · ENGINE</span><strong>Python analysis</strong><p>Python pipelines standardise incoming data, calculate statistical signals, combine weighted factors and update scenario probabilities.</p></div>
+        <i>→</i>
+        <div class="arch-node"><span>03 · CONTRACT</span><strong>Structured JSON</strong><p>A structured JSON data layer connects the private analysis engine to the public dashboard without exposing credentials or proprietary calculations.</p></div>
+        <i>→</i>
+        <div class="arch-node"><span>04 · OUTPUT</span><strong>Explainable dashboard</strong><p>The dashboard turns model output into directional scores, contributing drivers, source status and clear explanations.</p></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="methodology">
+      <div class="section-heading">
+        <div><span class="kicker">METHODOLOGY</span><h2>How MacroLens Works</h2></div>
+        <p>MacroLens combines three underlying dynamics before producing the final USD bias.</p>
+      </div>
+      <div class="method-grid">
+        <article class="panel method-card">
+          <span>UNDERLYING DYNAMIC 1</span>
+          <h3>Macro Fundamentals</h3>
+          <p>Converts labour-market, inflation, relative-rate and Federal Reserve policy data into a structured view of the US macro environment and its implications for the dollar.</p>
+        </article>
+        <article class="panel method-card">
+          <span>UNDERLYING DYNAMIC 2</span>
+          <h3>Scenario &amp; Yield Analysis</h3>
+          <p>Tests whether yield spreads, carry, real-rate differentials and broader market conditions confirm or challenge the fundamental view, then updates the weighting of alternative macro scenarios.</p>
+        </article>
+        <article class="panel method-card">
+          <span>UNDERLYING DYNAMIC 3</span>
+          <h3>Positioning &amp; Market Context</h3>
+          <p>Measures how institutional, retail and hedge-fund positioning is skewed around the USD and uses crowding as a conviction overlay.</p>
+          <p class="method-note">Risk sentiment is displayed separately as supporting market context, while the crowding overlay is driven by USD positioning.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell creator-section" id="creator">
+      <article class="panel creator-card">
+        <div>
+          <span class="kicker">CREATOR</span>
+          <h2>Founder &amp; Developer — Matthew Townsend</h2>
+          <p>MacroLens was created and developed by Matthew Townsend as a quantitative macro analysis and data-engineering project built with Python, statistical modelling and live economic data.</p>
+        </div>
+        <a class="creator-link" href="https://matthewtownsend.dev/" target="_blank" rel="me noopener">Personal website <span>→</span></a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div class="footer-project">
+        <div class="brand footer-brand">
+          <span class="brand-icon"><span>M</span></span>
+          <span>
+            <strong>MacroLens</strong>
+            <small>Quantitative macro analysis built with Python, statistical modelling and live economic data.</small>
+          </span>
+        </div>
+              </div>
+      <div class="footer-meta">
+        <span id="footer-generated">Latest model update: —</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="explain-modal" hidden>
+    <section class="explain-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-head">
+        <div>
+          <span class="mini-label" id="modal-kicker">WHY THIS RESULT?</span>
+          <h2 id="modal-title">—</h2>
+          <div class="modal-score-row"><strong id="modal-score">—</strong><span id="modal-effect" class="effect-chip">—</span><span id="modal-quality" class="quality-chip">—</span></div>
+        </div>
+        <button class="modal-close" id="modal-close" type="button" aria-label="Close explanation">×</button>
+      </header>
+
+      <div class="modal-body">
+        <section class="modal-summary">
+          <span class="modal-section-label">SUMMARY</span>
+          <p id="modal-summary">—</p>
+        </section>
+
+        <div class="modal-columns">
+          <section>
+            <div class="modal-section-head"><span class="modal-section-label">KEY DRIVERS</span><small id="modal-left-subtitle">Ranked by model impact</small></div>
+            <div id="modal-drivers"></div>
+          </section>
+
+          <section>
+            <div class="modal-section-head"><span class="modal-section-label" id="modal-right-title">INPUT GUIDE</span><small id="modal-right-subtitle">What the model is measuring</small></div>
+            <div class="tech-table" id="modal-technical"></div>
+          </section>
+        </div>
+
+        <div class="modal-notes" id="modal-notes"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

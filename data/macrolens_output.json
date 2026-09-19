@@ -1,0 +1,307 @@
+{
+  "project": {
+    "name": "MacroLens",
+    "version": "1.0-adapter",
+    "description": "A Python-based quantitative analysis system for structured US dollar macro analysis."
+  },
+  "status": {
+    "state": "LIVE_DATA_WITH_VERIFIED_INPUTS",
+    "generated_at": "2026-09-19T11:53:25.722385+00:00",
+    "phase_timestamps": {
+      "phase1": "2026-09-19T12:52:42.938288",
+      "phase2": "2026-09-19T12:52:59.548176",
+      "phase3": "2026-09-19T12:52:59.553835"
+    }
+  },
+  "final_bias": {
+    "score": -0.075,
+    "direction": "NEUTRAL",
+    "label": "Neutral",
+    "confidence": "LOW",
+    "bullish_scale_display": 0.463,
+    "complete": true,
+    "inputs": {
+      "phase1_mbs": -0.064,
+      "phase2_scenario": -0.078,
+      "crowding": 0.097
+    },
+    "contributions": {
+      "phase1_mbs": -0.029,
+      "phase2_scenario": -0.027,
+      "crowding_dampener": -0.019
+    },
+    "weights": {
+      "phase1_mbs": 0.45,
+      "phase2_scenario": 0.35,
+      "crowding_dampener": 0.2
+    },
+    "formula": "0.45*MBS + 0.35*ScenarioScore + 0.20*(-Crowding)"
+  },
+  "cards": [
+    {
+      "key": "lhi",
+      "title": "LHI",
+      "subtitle": "Labour Heat Index",
+      "score": -0.07,
+      "why": "Labor market cooling",
+      "contributors": [
+        {
+          "name": "unemployment",
+          "value": 4.1
+        },
+        {
+          "name": "nfp_surprise",
+          "value": 106.0
+        },
+        {
+          "name": "initial_claims",
+          "value": 196000.0
+        },
+        {
+          "name": "jolts_openings",
+          "value": 7271.0
+        },
+        {
+          "name": "jolts_quits",
+          "value": 1.9
+        }
+      ],
+      "data_quality": "LIVE"
+    },
+    {
+      "key": "ims",
+      "title": "IMS",
+      "subtitle": "Inflation Momentum Score",
+      "score": -0.27,
+      "why": "Inflation cooling",
+      "contributors": [
+        {
+          "name": "core_cpi_saar",
+          "value": 1.971
+        },
+        {
+          "name": "core_pce_saar",
+          "value": 3.048
+        },
+        {
+          "name": "ppi_core",
+          "value": 154.842
+        }
+      ],
+      "data_quality": "LIVE"
+    },
+    {
+      "key": "rds",
+      "title": "RDS",
+      "subtitle": "Rate Differential Signal",
+      "score": -0.498,
+      "why": "Rate differentials against USD",
+      "contributors": [
+        {
+          "name": "us_2y",
+          "value": 4.67
+        },
+        {
+          "name": "us_10y",
+          "value": 4.94
+        },
+        {
+          "name": "de_10y",
+          "value": 3.18
+        },
+        {
+          "name": "de_2y",
+          "value": 2.68
+        },
+        {
+          "name": "us_de_2y_spread",
+          "value": 1.99
+        },
+        {
+          "name": "us_de_2y_delta",
+          "value": 0.0004
+        }
+      ],
+      "data_quality": "LIVE"
+    },
+    {
+      "key": "pes",
+      "title": "PES",
+      "subtitle": "Policy Expectation Score",
+      "score": 1.654,
+      "why": "Hawkish - -0.7 cuts priced, supporting USD",
+      "contributors": [],
+      "data_quality": "PARTIAL"
+    },
+    {
+      "key": "phase2",
+      "title": "Phase 2",
+      "subtitle": "Scenario & Yield Analysis",
+      "score": -0.078,
+      "why": "Neutral scenario",
+      "contributors": [
+        {
+          "name": "yss",
+          "value": -0.1
+        },
+        {
+          "name": "carry",
+          "value": -0.333
+        },
+        {
+          "name": "real_rate_tilt",
+          "value": 0.12
+        },
+        {
+          "name": "mrs",
+          "value": 0.083
+        }
+      ],
+      "data_quality": "FULL"
+    },
+    {
+      "key": "positioning",
+      "title": "Positioning",
+      "subtitle": "USD Market Positioning",
+      "score": 0.097,
+      "why": "USD positioning neutral",
+      "contributors": [
+        {
+          "name": "cot_z",
+          "value": 0.68
+        },
+        {
+          "name": "retail_skew",
+          "value": -0.18
+        },
+        {
+          "name": "etf_z",
+          "value": null
+        },
+        {
+          "name": "hf_tilt",
+          "value": -0.111
+        }
+      ],
+      "data_quality": "MIXED",
+      "notes": [],
+      "drivers": [],
+      "technical_data": []
+    },
+    {
+      "key": "sentiment",
+      "title": "Sentiment",
+      "subtitle": "Equity Risk Sentiment",
+      "score": -0.206,
+      "why": "Mild risk aversion",
+      "contributors": [
+        {
+          "name": "vix_z",
+          "value": -0.83
+        },
+        {
+          "name": "pcr_z",
+          "value": 2.27
+        },
+        {
+          "name": "aaii_z",
+          "value": 0.26
+        },
+        {
+          "name": "fgi_norm",
+          "value": -0.418
+        }
+      ],
+      "data_quality": "MIXED",
+      "context_only": true,
+      "risk_regime": "RISK_OFF"
+    },
+    {
+      "key": "crowding",
+      "title": "Crowding",
+      "subtitle": "USD Crowding Overlay",
+      "score": 0.097,
+      "why": "USD crowding: NEUTRAL",
+      "contributors": [],
+      "data_quality": "DERIVED",
+      "regime": "NEUTRAL"
+    }
+  ],
+  "scenario_probabilities": {
+    "base": 0.4137,
+    "hawkish_usd": 0.2477,
+    "dovish_risk_on": 0.3386,
+    "method": "BAYESIAN"
+  },
+  "source_status": [
+    {
+      "source": "FRED",
+      "status": "LIVE",
+      "note": "Economic and interest-rate data"
+    },
+    {
+      "source": "CFTC",
+      "status": "LIVE",
+      "note": "Institutional and hedge-fund positioning data"
+    },
+    {
+      "source": "Yahoo Finance",
+      "status": "LIVE",
+      "note": "Market and volatility inputs"
+    },
+    {
+      "source": "Myfxbook",
+      "status": "LIVE_PRIVATE_REFRESH",
+      "note": "Authenticated retail positioning data"
+    },
+    {
+      "source": "NFP Surprise",
+      "status": "VERIFIED_INPUT",
+      "note": "Latest payroll result relative to the market consensus forecast"
+    },
+    {
+      "source": "Fedspeak",
+      "status": "VERIFIED_INPUT",
+      "note": "Current Federal Reserve communication stance"
+    },
+    {
+      "source": "AAII",
+      "status": "VERIFIED_INPUT",
+      "note": "Latest AAII investor sentiment survey readings"
+    }
+  ],
+  "data_quality": {
+    "phase1": {
+      "LHI": "LIVE",
+      "IMS": "LIVE",
+      "RDS": "LIVE",
+      "PES": "PARTIAL"
+    },
+    "phase2": {
+      "yss": "FULL",
+      "carry": "FULL",
+      "real_rate_tilt": "FULL",
+      "mrs": "FULL",
+      "scenarios": "FULL",
+      "phase2_aggregate": "FULL"
+    },
+    "phase3": {
+      "retail": "LIVE_PRIVATE_REFRESH",
+      "aaii": "VERIFIED_INPUT",
+      "sentiment_context_only": true
+    }
+  },
+  "warnings": {
+    "phase1": [],
+    "phase2": []
+  },
+  "methodology": {
+    "final_bias_source": "PDF page 16",
+    "scenario_score_adapter": "phase2.phase2_aggregate.score",
+    "scenario_score_note": "V1 integration mapping; Bayesian probabilities remain exposed separately.",
+    "sentiment_note": "Risk sentiment is displayed separately as supporting market context, while the crowding overlay is driven by USD positioning."
+  },
+  "verified_inputs": {
+    "updated_at": "2026-09-18"
+  }
+}
